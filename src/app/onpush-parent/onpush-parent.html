@@ -1,0 +1,15 @@
+<h2>Default vs OnPush</h2>
+
+<!-- Parent-side changes: each one affects BOTH children -->
+<p>
+  <button (click)="changeObj()">1. New object reference</button>
+  <button (click)="mutateObj()">2. Mutate object</button>
+  <button (click)="changeLabel()">3. Change string input</button>
+  <button (click)="incrementParent()">4. Parent-only counter: {{ parentCounter }}</button>
+</p>
+
+<!-- Same inputs to both children; only the strategy differs -->
+<div class="row">
+  <app-default-child [fromParent]="fromParent" [label]="label"></app-default-child>
+  <app-onpush-child [fromParent]="fromParent" [label]="label"></app-onpush-child>
+</div>

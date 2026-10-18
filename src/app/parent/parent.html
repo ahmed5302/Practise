@@ -1,0 +1,12 @@
+<!-- <div *ngTemplateOutlet="temp;context:{name:'John'}"></div> -->
+<p (click)="getInst()">parent works!</p>
+<app-child [userArr]="arr">
+<ng-template #temp let-data let-i="index">
+    <p>NG_TEMPLATE --- {{data.name}} (Index: {{i}})</p>
+</ng-template>
+</app-child>
+ <!-- <app-child>
+I AM IN PARENT
+<div title> TITLE GIVEN</div>
+ </app-child> -->
+ 

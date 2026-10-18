@@ -1,0 +1,28 @@
+ 
+<ng-content select="[title]">
+    <p>title Dault in CHILD</p>
+</ng-content>
+<p>child works!</p>
+
+<!-- Render the template the parent passed in, giving it the child's data -->
+
+   
+
+<ng-content>
+    <p>CHECK</p>
+</ng-content>
+
+<ul>
+    @for(user of userArr; track $index){
+        <li>
+            @if(temp){
+                <ng-container *ngTemplateOutlet="temp; context: {$implicit : user,index : $index}"></ng-container>
+            }
+            @else {
+                {{user.name}}
+            }
+        </li>   
+    }
+</ul>
+
+

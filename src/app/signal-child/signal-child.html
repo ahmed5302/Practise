@@ -1,0 +1,15 @@
+<div [style.color]="color()" style="border:1px solid #ccc; padding:8px; margin:8px 0">
+  <h3>{{ upperTitle() }}</h3>
+  @if (toChild()) { <p>From parent: {{ toChild() }}</p> }
+
+  <button (click)="decrease()">-</button>
+  Qty: {{ qty() }}
+  <button (click)="increase()">+</button>
+
+  <br />
+  <input #box placeholder="child's input box" />
+  <button (click)="remove()">Remove</button>
+
+  <!-- parent's content lands here -->
+  <ng-content></ng-content>
+</div>

@@ -1,0 +1,46 @@
+<!-- trackRender() logs every time Angular checks THIS template -->
+{{ trackRender() }}
+
+<div class="card">
+  <h3>{{ mode }} child</h3>
+
+  <!-- Values coming from the parent -->
+  <p><b>fromParent.firstName:</b> {{ fromParent.firstName }}</p>
+  <p><b>label (string input):</b> {{ label }}</p>
+
+  <hr />
+
+  <!-- Values changed inside the child. Each button waits 1.5s, except A. -->
+  <p>
+    <button (click)="incrementClick()">A. Click (sync)</button>
+    {{ clickCount }}
+  </p>
+  <p>
+    <button (click)="startTimeout()">B. setTimeout</button>
+    {{ timeoutValue }}
+  </p>
+  <p>
+    <button (click)="startSubscribe()">C. subscribe()</button>
+    {{ subscribeValue }}
+  </p>
+  <p>
+    <button (click)="startAsyncPipe()">D. async pipe</button>
+    {{ asyncValue$ | async }}
+  </p>
+  <p>
+    <button (click)="startSignal()">E. signal</button>
+    {{ signalValue() }}
+  </p>
+  <p>
+    <button (click)="startMarkForCheck()">F. markForCheck()</button>
+    {{ markValue }}
+  </p>
+  <p>
+    <button (click)="startDetectChanges()">G. detectChanges()</button>
+    {{ detectValue }}
+  </p>
+
+  <hr />
+  <!-- A click inside the child: makes an OnPush child refresh and "catch up" -->
+  <button (click)="logValues()">Log TS values (and refresh)</button>
+</div>

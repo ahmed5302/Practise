@@ -1,0 +1,27 @@
+<p>temp-driven works!</p>
+<form #profileForm="ngForm" (ngSubmit)="onSubmit(profileForm)">
+  <input name="fullName" [(ngModel)]="model.fullName" appCustomDirective  #fullName="ngModel">
+<p>{{ fullName.invalid }}</p>
+<p>{{ fullName.touched}}</p>
+@if(fullName.invalid && fullName.touched){
+    @if(fullName.errors?.['invalidCharacters']){
+        <p>Full name can only contain letters and numbers.</p>
+    }
+}
+
+  <div ngModelGroup="address" #addressGroup="ngModelGroup">
+    <input name="city" [(ngModel)]="model.address.city" required>
+    <input name="zip" [(ngModel)]="model.address.zip" required>
+  </div>
+
+
+  @if( addressGroup.invalid && addressGroup.touched ){
+  <div>
+    Address is incomplete.
+  </div>
+  }
+<button type="submit">Submitdfgdf</button>
+</form>
+
+<!-- <router-outlet></router-outlet> -->
+ <app-temp-child-1></app-temp-child-1>

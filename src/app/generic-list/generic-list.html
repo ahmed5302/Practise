@@ -1,0 +1,13 @@
+
+<ng-content select="[card-footer]"></ng-content>
+<p >generic-list works! ghg</p>
+
+
+@for( item of items;track item){
+    <ng-container
+        *ngTemplateOutlet="itemTemplate; context: { $implicit: item }">
+      </ng-container>
+}
+
+<!-- <ng-content></ng-content> -->
+

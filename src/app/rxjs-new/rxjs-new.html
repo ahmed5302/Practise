@@ -1,0 +1,16 @@
+<p>rxjs-new works!</p>
+
+<button #btn (click)="getHttpData()">Send Value</button>
+
+<input type="text" [(ngModel)]="props" (ngModelChange)="onPropsChange($event)" placeholder="Enter name" />
+{{props}}
+
+@defer(on interaction(btn)){
+<app-reactive-form></app-reactive-form>
+}
+@placeholder {
+    <div>Placeholder</div>
+}
+@loading {
+    <div>LOADING</div>
+}

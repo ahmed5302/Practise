@@ -1,0 +1,35 @@
+<p>react-form works!</p>
+<!-- <p><a routerLink ="/react/14">REACT</a></p> -->
+<form [formGroup]="userFormGroup" (ngSubmit)="onSubmit()">
+    <!-- <div formGroupName="personal">
+        <p><input type="text" formControlName="firstName"></p>
+  @if(userFormGroup.get('personal.firstName')?.touched && userFormGroup.get('personal.firstName')?.invalid){
+        @if(userFormGroup.get('personal.firstName')?.errors?.['minlength']){
+            <p>Provide 6 words</p>
+        }
+    }
+    </div> -->
+    
+  
+  
+    <!-- <p><input type="text" formControlName="lastName">
+    @if( userFormGroup.get('lastName')?.touched && userFormGroup.get('lastName')?.invalid){
+        @if( userFormGroup.get('lastName')?.errors?.['customErrors']){
+            <p>CUSTOM VALIDATION ERRORS</p>
+        }
+    }
+    </p> -->
+
+    <div formArrayName="personal">
+        @for (ctrl of personal.controls; track ctrl; let i = $index) {
+             <input type="text" [formControlName]="i">
+        }
+
+    </div>
+
+
+    <p><button [disabled]="userFormGroup.invalid">Submit</button></p>
+    
+</form>
+<button (click)="getPosts()">POSTS</button>
+<button (click)="getComments()">COMMENTS</button>

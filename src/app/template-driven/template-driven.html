@@ -1,0 +1,15 @@
+<p>template-driven works!</p>
+
+<form #templateDriven="ngForm" (ngSubmit)="onSubmit(templateDriven)">
+    <div><input type="text" [(ngModel)]="firstName"  required name ="firstName" #first="ngModel" minlength="6">
+        
+        @if(first.invalid && first.touched){
+            <div>ERRORS</div>
+        }
+    </div>
+    <div><input type="text" [(ngModel)]="lastName" name ="lastName" required #last="ngModel"></div>
+    <div>
+            <button type="submit" [disabled]="templateDriven.invalid">Template Deiven</button>
+
+    </div>
+</form>

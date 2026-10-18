@@ -1,0 +1,38 @@
+<p>reactive-form works!</p>
+
+<form [formGroup]="userForm" (ngSubmit)="submitForm()">
+    <div formArrayName="users">
+        @for (user of users().controls; track user; let i = $index) {
+            <div [formGroupName]="i">
+                <h4>User {{ i + 1 }}</h4>
+
+                <input type="text" formControlName="firstName" placeholder="First name">
+                @if( user.get('firstName')?.invalid && user.get('firstName')?.touched ){
+                    @if( user.get('firstName')?.errors?.['required'] ){
+                        <p>First name is required.</p>
+                    }
+                    @if( user.get('firstName')?.errors?.['minlength'] ){
+                        <p>First name must be at least 3 characters long.</p>
+                    }
+                    @if( user.get('firstName')?.errors?.['space'] ){
+                        <p>First name must not contain spaces.</p>
+                    }
+                }
+
+                <input type="text" formControlName="lastName" placeholder="Last name">
+                @if( user.get('lastName')?.invalid && user.get('lastName')?.touched ){
+                    <p>Last name is required.</p>
+                }
+
+                @if (users.length > 1) {
+                    <button type="button" (click)="removeUser(i)">Remove</button>
+                }
+            </div>
+        }
+    </div>
+
+    <div>
+        <button type="button" (click)="addUser()">+ Add user</button>
+        <button type="submit" [disabled]="userForm.invalid">Submit</button>
+    </div>
+</form>

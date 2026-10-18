@@ -1,0 +1,9 @@
+{
+  "users": [
+    { "id": 1, "name": "Ahmed", "role": "developer" },
+    { "id": 2, "name": "Priya", "role": "admin" }
+  ],
+  "tasks": [
+    { "id": 1, "title": "Setup DB", "userId": 1 }
+  ]
+}
