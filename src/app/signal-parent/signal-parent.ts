@@ -3,6 +3,7 @@ import { Component, computed, effect, inject, linkedSignal, signal, untracked, v
 import { toSignal } from '@angular/core/rxjs-interop';
 import { SignalChild } from '../signal-child/signal-child';
 
+
 @Component({
   selector: 'app-signal-parent',
   imports: [SignalChild ],
@@ -60,9 +61,24 @@ ngAfterViewInit(){
   });
   
 }
- count = signal({id :0,name :"Ahmed"},{equal : (a,b)=>a.id === b.id });
+count = signal({id :0,name :"Ahmed"},{equal : (a,b)=>a.id === b.id });
 val = signal(40);
- ngOnInit(){
+ngOnInit(){
+  const Acc : Omit<Account,'name' | 'id'> & Partial<Pick<Account, 'name'>> = {
+    // name : 'Ahmed',
+    age :19,
+    // id :2
+  };
+  // Acc.age = 30;
+  console.log("Account ",Acc);
+  
+
+  function getAmount<T >(amo: T): T {
+    console.log(amo);
+    return amo
+  }
+  console.log( getAmount<number>(10));
+  console.log( getAmount<string>('HELLLO'));
   // console.log(this.count());
 
   // this.count.update( v => v + 20 );
@@ -74,7 +90,7 @@ val = signal(40);
   
     // this.count.set({id :2,name :"Mansoor"});
   // console.log(this.count());
- }
+}
 counter = 1;
  check(){
   // this.count.set(500);

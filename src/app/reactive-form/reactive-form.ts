@@ -1,9 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators, } from '@angular/forms';
+import { NgEventBus } from 'ng-event-bus';
+import { Subject } from 'rxjs';
+import { ProfilePage } from '../profile-page/profile-page';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+import { SharedNative } from 'shared-native';
 
 @Component({
   selector: 'app-reactive-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ProfilePage],
   templateUrl: './reactive-form.html',
   styleUrl: './reactive-form.css',
 })
@@ -12,15 +17,32 @@ export class ReactiveForm {
 
 
   fb = inject(FormBuilder);
+  ngbus= inject(NgEventBus);
+  route = inject(ActivatedRoute);
+  router = inject(Router);
+  shared = inject(SharedNative);
 
   ngOnInit() {
+    const sub = new Subject();
+    sub.subscribe((val)=> console.log(val)
+    );
+
+    sub.next("Ahmed");
+    sub.next("Mansoor");
+
+
+    const pro = new Promise((resolve)=>{
+      setTimeout( ()=>{
+        resolve('Promoses')
+      },1000);
+    });
+    pro.then( (val)=> console.log(val));
+
+
     this.userForm = this.fb.group({
-      users: this.fb.array([
-        this.fb.group({
-          firstName: ['', [Validators.required, Validators.minLength(3), this.customValidators]],
-          lastName: ['', [Validators.required]]
-        })
-      ])
+      mobile:[''],
+      home:[''],
+      users: this.fb.array([this.createUser()])
     });
 
     this.userForm.valueChanges.subscribe((item) => {
@@ -31,10 +53,20 @@ export class ReactiveForm {
 
   // one row = one FormGroup with firstName + lastName
   createUser(): FormGroup {
-    return this.fb.group({
-      firstName: ['', [Validators.required, Validators.minLength(3), this.customValidators]],
-      lastName: ['', [Validators.required]]
-    });
+    return this.fb.group(
+      {
+        firstName: ['', [Validators.minLength(3), this.customValidators]],
+        lastName: ['']
+      },
+      { validators: this.firstOrLastNameRequired }
+    );
+  }
+
+  // group-level validator: at least one of firstName / lastName must be filled
+  firstOrLastNameRequired(group: AbstractControl): ValidationErrors | null {
+    const first = (group.get('firstName')?.value ?? '').trim();
+    const last = (group.get('lastName')?.value ?? '').trim();
+    return first || last ? null : { nameRequired: true };
   }
 
   users() {
@@ -59,6 +91,26 @@ export class ReactiveForm {
   submitForm() {
     console.log(this.userForm.value);
   }
+
+  ngBusData(){
+    this.ngbus.cast('message:personal',{name :"Ahmed",age :30});
+    this.ngbus.cast('message:land',{name :"Down",area :40});
+    this.ngbus.cast('message:vehicle',{name :"xyz",age :50});
+     this.ngbus.cast('message:house:square',{name :"xyz",age :50});
+
+  }
+  passRemoteData(){
+    this.router.navigate(['/remote'],
+      
+    //   {
+    //   queryParams :{name :"Ahmed"}
+    // }
+  )
+  // .then( ()=>window.dispatchEvent(new CustomEvent('custom',{detail  :"Mansoor"})) ); 
+
+  this.shared.setSub("Name Changed to Mansoor");
+  }
+
 
 
 }

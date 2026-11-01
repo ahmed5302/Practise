@@ -1,6 +1,13 @@
 <p>reactive-form works!</p>
 
 <form [formGroup]="userForm" (ngSubmit)="submitForm()">
+    <div>
+        <input type="text" formControlName="mobile">
+    </div>
+    <br/>
+        <div>
+        <input type="text" formControlName="home">
+    </div>
     <div formArrayName="users">
         @for (user of users().controls; track user; let i = $index) {
             <div [formGroupName]="i">
@@ -8,9 +15,6 @@
 
                 <input type="text" formControlName="firstName" placeholder="First name">
                 @if( user.get('firstName')?.invalid && user.get('firstName')?.touched ){
-                    @if( user.get('firstName')?.errors?.['required'] ){
-                        <p>First name is required.</p>
-                    }
                     @if( user.get('firstName')?.errors?.['minlength'] ){
                         <p>First name must be at least 3 characters long.</p>
                     }
@@ -20,8 +24,8 @@
                 }
 
                 <input type="text" formControlName="lastName" placeholder="Last name">
-                @if( user.get('lastName')?.invalid && user.get('lastName')?.touched ){
-                    <p>Last name is required.</p>
+                @if( user.errors?.['nameRequired'] && (user.get('firstName')?.touched || user.get('lastName')?.touched) ){
+                    <p>Enter either a first name or a last name.</p>
                 }
 
                 @if (users.length > 1) {
@@ -36,3 +40,10 @@
         <button type="submit" [disabled]="userForm.invalid">Submit</button>
     </div>
 </form>
+
+<button (click)="ngBusData()">NGBUS</button>
+
+<button (click)="passRemoteData()">REMOTE</button>
+<app-profile-page></app-profile-page>
+
+

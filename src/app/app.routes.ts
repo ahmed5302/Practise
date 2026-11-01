@@ -11,12 +11,32 @@ import { RouteService } from './route-service';
 import { RxjsNew } from './rxjs-new/rxjs-new';
 import { OnpushParent } from './onpush-parent/onpush-parent';
 import { SignalParent } from './signal-parent/signal-parent';
+import { NgrxCounter } from './ngrx-counter/ngrx-counter';
+import { Js } from './js/js';
+import { canActivate, canMatch1, canMatch2 } from './can-activate';
+import { loadRemoteModule } from '@angular-architects/native-federation';
 
 export const routes: Routes = [
     {
         path : '',
-        redirectTo:'/signalParent',
+        redirectTo:'reactive-form',
         pathMatch: 'full'
+    },
+    {
+        path :'common',
+        component : Js,
+        canMatch : [canMatch1]
+    },
+    {
+        path : 'common',
+        component : NgrxCounter,
+        canMatch : [canMatch2]
+        // canActivate : [canActivate],
+        // data : { status : true}
+    },
+        {
+        path:'profile',
+        component : ProfilePage,
     },
     {
         path:'on-push',
@@ -30,10 +50,6 @@ export const routes: Routes = [
         path :'rxjs-new',
         component : RxjsNew,
         providers : [RouteService]
-    },
-    {
-        path:'profile',
-        component : ProfilePage,
     },
     {
         path :'temp-driv',
@@ -68,7 +84,12 @@ export const routes: Routes = [
         // loadComponent : ()=>  import('./react-form/react-form').then(res => res.ReactForm)
     },
     {
+        path : 'remote',
+        loadComponent : () => loadRemoteModule('remote', './Component').then(m => { console.log(m); return m.App}),
+        // data :{name :"Ahmed"}
+    },
+    {
         path :'**',
         component : ProfilePage
-    }
+    },
 ];

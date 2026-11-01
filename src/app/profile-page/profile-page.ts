@@ -4,6 +4,8 @@ import { CustomDirective } from '../custom-directive';
 import { Parent } from '../parent/parent';
 import { Common } from '../common';
 import { RouteService } from '../route-service';
+import { NgEventBus } from 'ng-event-bus';
+import { Subscription } from 'rxjs';
 
 interface User {
   name: string;
@@ -15,14 +17,24 @@ interface User {
   imports: [GenericList,CustomDirective, Parent],
   templateUrl: './profile-page.html',
   styleUrl: './profile-page.css',
-  providers:[Common]
+  providers:[Common,RouteService]
 })
 export class ProfilePage {
-
+ ngbus = inject(NgEventBus);
+ ngBusdata:any;
   routeService = inject(RouteService);
+
+  sub! : Subscription;
   ngOnInit(){
     // this.routeService.item = "PROFILE PAGE";
     // console.log("PROFILE PAGE ",this.routeService.item);
+this.sub = this.ngbus.on('message:personal').subscribe( val =>{
+  this.ngBusdata = val.data;
+  console.log("NGBUS PERSONAL",val);
+});
+this.ngbus.on('message:**').subscribe( val =>{
+  console.log("NGBUS VEHICLE",val);
+});
   }
   btn = "BTN"
 users: User[] = [
@@ -30,4 +42,8 @@ users: User[] = [
     { name: 'Priya', email: 'priya@example.com' },
     { name: 'Karthik', email: 'karthik@example.com' }
   ];
+
+ngOnDestroy(){
+  this.sub.unsubscribe();
+}
 }
