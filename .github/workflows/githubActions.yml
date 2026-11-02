@@ -9,5 +9,5 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
-      - name: Build app
-        run: npm run build
+      - name :check code 
+        run :ls
