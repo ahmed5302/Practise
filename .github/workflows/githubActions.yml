@@ -20,7 +20,7 @@ jobs:
         with:
           # wait for the Quality Gate result and fail this job if it fails
           args: >
-            -Dsonar.qualitygate.wait=false
+            -Dsonar.qualitygate.wait=true
   build:
     needs: sonarqube # runs only if the SonarQube quality gate passed
     runs-on: ubuntu-latest
