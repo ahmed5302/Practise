@@ -6,7 +6,23 @@ on:
       - main
 
 jobs:
+  sonarqube:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # full git history so Sonar can track new vs. old code
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v8
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          # wait for the Quality Gate result and fail this job if it fails
+          args: >
+            -Dsonar.qualitygate.wait=true
   build:
+    needs: sonarqube # runs only if the tests passed
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -17,7 +33,6 @@ jobs:
           node-version: 24
           cache: 'npm'
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: build
         run: npm run build
-  
