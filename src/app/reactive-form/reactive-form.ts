@@ -4,7 +4,7 @@ import { NgEventBus } from 'ng-event-bus';
 import { Subject } from 'rxjs';
 import { ProfilePage } from '../profile-page/profile-page';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
-import { SharedNative } from 'shared-native';
+// import { SharedNative } from 'shared-native';
 
 @Component({
   selector: 'app-reactive-form',
@@ -20,7 +20,7 @@ export class ReactiveForm {
   ngbus= inject(NgEventBus);
   route = inject(ActivatedRoute);
   router = inject(Router);
-  shared = inject(SharedNative);
+  // shared = inject(SharedNative);
 
   ngOnInit() {
     const sub = new Subject();
@@ -108,7 +108,7 @@ export class ReactiveForm {
   )
   // .then( ()=>window.dispatchEvent(new CustomEvent('custom',{detail  :"Mansoor"})) ); 
 
-  this.shared.setSub("Name Changed to Mansoor");
+  // this.shared.setSub("Name Changed to Mansoor");
   }
 
 
