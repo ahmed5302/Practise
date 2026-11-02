@@ -1,7 +1,9 @@
 name: Angular Application CI/CD
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - learn-2
 
 jobs:
   build-and-test:
