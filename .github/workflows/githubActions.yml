@@ -6,7 +6,7 @@ on:
       - learn-2
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -17,5 +17,8 @@ jobs:
         run: npm install
       - name: build
         run: npm run build
-      - name: test
+  Test:
+    runs-on: ubuntu-Latest
+    steps:
+      - name: testing
         run: npm run test
