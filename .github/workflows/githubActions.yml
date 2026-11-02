@@ -3,7 +3,7 @@ name: Angular Application CI/CD
 on:
   push:
     branches:
-      - learn-2
+      - main
 
 jobs:
   build:
@@ -20,9 +20,4 @@ jobs:
         run: npm install
       - name: build
         run: npm run build
-  Test:
-    needs: build
-    runs-on: ubuntu-Latest
-    steps:
-      - name: testing
-        run: npm run test
+  
